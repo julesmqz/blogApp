@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+html(lang="es")
+    include common/head.pug
+    body
+        include common/nav.pug    
+        .container-fluid
+            .row
+                .col-8
+                    input(data-add-tag-value type="text" class="form-control" id="validationServer01" placeholder="tag" value="" required)
+                    .valid-feedback(data-add-tag-msg)
+                .col-4
+                    button(class="btn btn-primary" data-add-tag) Guardar
+                        
+    include common/footer.pug
+    script.
+        $(document).ready(function(){
+            $('[data-add-tag]').click(function(){
+                let tag = $('[data-add-tag-value]').val();
+                if( tag ){
+                    ajaxSave('addTag',{tag: tag},function(data){
+                        $('[data-add-tag-value]').addClass('is-valid');
+                        $('[data-add-tag-msg]').html(data.msg);
+
+                        setTimeout(function(){
+                            $('[data-add-tag-value]').val('').removeClass('is-valid');
+                            $('[data-add-tag-msg]').html('');
+                        },5000);
+                    })
+                }
+            });
+        });

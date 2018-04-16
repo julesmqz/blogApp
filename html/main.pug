@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+html(lang="es")
+    include common/head.pug
+    body
+        include common/nav.pug     
+        .container-fluid
+            .row
+                .col-md-12.col-lg-6
+                    .jh-card.fourth
+                        .fas.fa-tags.jh-big-icon
+                        h2 Tags
+                        .list-group.list-group-flush
+                            a.list-group-item.list-group-item-action(href="#N" data-load-view data-view="addTag" data-size="mini") 
+                                span Crear
+                            a.list-group-item.list-group-item-action(href="#N") 
+                                span Lista
+                                span.badge.badge-light.float-right(data-dashboard="tags") 0
+                .col-md-12.col-lg-6
+                    .jh-card.third
+                        .far.fa-file-alt.jh-big-icon
+                        h2 Entradas
+                        .list-group.list-group-flush
+                            a.list-group-item.list-group-item-action(href="#N" data-load-view data-view="editor" data-size="self-full") 
+                                span Crear
+                            a.list-group-item.list-group-item-action(href="#N") 
+                                span Lista
+                                span.badge.badge-light.float-right(data-dashboard="posts") 0
+                .col-md-12.col-lg-6
+                    .jh-card.second
+                        .far.fa-images.jh-big-icon
+                        h2 Slider
+                        .list-group.list-group-flush
+                            a.list-group-item.list-group-item-action(href="#N") 
+                                span Agregar entrada
+                            a.list-group-item.list-group-item-action(href="#N") 
+                                span Lista
+                                span.badge.badge-light.float-right(data-dashboard="slider") 0
+                .col-md-12.col-lg-6
+                    .jh-card.first
+                        .fab.fa-instagram.jh-big-icon
+                        h2 Footer
+                        .list-group.list-group-flush
+                            a.list-group-item.list-group-item-action(href="#N" data-refresh-instagram) 
+                                span Refrescar
+                                span.badge.badge-light.float-right.d-none
+                                    i.fas.fa-spinner.fa-pulse
+                            a.list-group-item.list-group-item-action(href="#N") 
+                                span Lista
+                                span.badge.badge-light.float-right(data-dashboard="footer") 0
+    include common/footer.pug
+    script
+        include js/dashboard.js
+        

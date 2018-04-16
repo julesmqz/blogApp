@@ -1,0 +1,138 @@
+body {
+  font-family: 'Roboto', Helvetica, Arial;
+}
+
+.navbar {
+  margin-bottom: 30px;
+}
+
+.jh-brand {
+  width: 150px;
+  margin: auto;
+}
+
+.jh-card {
+  width: 100%;
+  min-height: 300px;
+  color: #FFF;
+  padding: 30px;
+  margin: 30px 0;
+}
+
+.jh-card.first {
+  background-color: #373737;
+  border: 1px solid #373737;
+}
+
+.jh-card.second {
+  background-color: #5088BC;
+  border: 1px solid #5088BC;
+}
+
+.jh-card.third {
+  background-color: #3EA9D9;
+  border: 1px solid #3EA9D9;
+}
+
+.jh-card.fourth {
+  background-color: #FFF9CD;
+  border: 1px solid #FFF9CD;
+  color: #373737;
+}
+
+.jh-card .jh-big-icon {
+  display: block;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+.jh-card .list-group {
+  background-color: transparent;
+  color: inherit;
+}
+
+.jh-card .list-group .list-group-item {
+  background-color: transparent;
+  color: inherit;
+}
+
+.jh-big-icon {
+  font-size: 100px;
+}
+
+.jh-center {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.jh-center .row {
+  width: 100%;
+  margin: 0;
+}
+
+.jh-add {
+  text-align: center;
+  display: block;
+  color: #5088BC;
+}
+
+.jh-add .fa-tags, .jh-add .fa-file-alt {
+  font-size: 100px;
+  display: block;
+  margin: auto;
+  color: inherit;
+}
+
+.jh-add .title {
+  display: block;
+  margin-top: 10px;
+  font-size: 34px;
+  text-transform: capitalize;
+  color: inherit;
+}
+
+.jh-add:hover {
+  cursor: pointer;
+}
+
+.jh-add:hover .fa-file-alt, .jh-add:hover .fa-tags, .jh-add:hover .title {
+  color: #3EA9D9;
+}
+
+.jh-slot {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #FFF;
+}
+
+.jh-slot:hover:not(.no-border) {
+  border: 1px solid #373737;
+}
+
+.jh-slot .badge-list {
+  margin-bottom: 10px;
+}
+
+.jh-slot .badge-list .badge {
+  margin: 0 5px;
+}
+
+.jh-tag-list .list-group-item {
+  cursor: pointer;
+}
+
+.jh-tag-list .list-group-item .float-right {
+  visibility: hidden;
+  color: #3EA9D9;
+}
+
+.jh-tag-list .list-group-item:hover {
+  background-color: #FFF9CD;
+}
+
+.jh-tag-list .list-group-item:hover .float-right {
+  visibility: initial;
+}
+/*# sourceMappingURL=app.css.map */

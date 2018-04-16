@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="ie=edge"/><title>Jule de Hule Blog Admin</title><link href="http://jh.localhost/assets/css/bootstrap.min.css" rel="stylesheet"/><script defer="defer" src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script><link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/><link href="css/app.min.css" rel="stylesheet"/></head><body><nav class="navbar navbar-light bg-light"><img class="jh-brand d-inline-block align-top" src="http://assets.juledehule.com.mx/img/logo_vertical.png?66ad79ecb7128f0679bf61fdc19f2459" alt=""/></nav><div class="container-fluid"><div class="row"><div class="col-md-12 col-lg-6"><div class="jh-card fourth"><div class="fas fa-tags jh-big-icon"></div><h2>Tags</h2><div class="list-group list-group-flush"><a class="list-group-item list-group-item-action" href="#N" data-load-view="data-load-view" data-view="addTag" data-size="mini"> <span>Crear</span></a><a class="list-group-item list-group-item-action" href="#N"> <span>Lista</span><span class="badge badge-light float-right" data-dashboard="tags">0</span></a></div></div></div><div class="col-md-12 col-lg-6"><div class="jh-card third"><div class="far fa-file-alt jh-big-icon"></div><h2>Entradas</h2><div class="list-group list-group-flush"><a class="list-group-item list-group-item-action" href="#N" data-load-view="data-load-view" data-view="editor" data-size="self-full"> <span>Crear</span></a><a class="list-group-item list-group-item-action" href="#N"> <span>Lista</span><span class="badge badge-light float-right" data-dashboard="posts">0</span></a></div></div></div><div class="col-md-12 col-lg-6"><div class="jh-card second"><div class="far fa-images jh-big-icon"></div><h2>Slider</h2><div class="list-group list-group-flush"><a class="list-group-item list-group-item-action" href="#N"> <span>Agregar entrada</span></a><a class="list-group-item list-group-item-action" href="#N"> <span>Lista</span><span class="badge badge-light float-right" data-dashboard="slider">0</span></a></div></div></div><div class="col-md-12 col-lg-6"><div class="jh-card first"><div class="fab fa-instagram jh-big-icon"></div><h2>Footer</h2><div class="list-group list-group-flush"><a class="list-group-item list-group-item-action" href="#N" data-refresh-instagram="data-refresh-instagram"> <span>Refrescar</span><span class="badge badge-light float-right d-none"><i class="fas fa-spinner fa-pulse"></i></span></a><a class="list-group-item list-group-item-action" href="#N"> <span>Lista</span><span class="badge badge-light float-right" data-dashboard="footer">0</span></a></div></div></div></div></div></body><script>window.$ = window.jQuery = require('jquery');</script><script src="http://jh.localhost/assets/js/popper.min.js"></script><script src="http://jh.localhost/assets/js/bootstrap.min.js"></script><script> const electron = require('electron');
+const { ipcRenderer } = electron;
+const globalUrl = 'http://jh.localhost/';
+
+function ajaxSave(url, data, cb) {
+    $.ajax({
+        type: "POST",
+        url: globalUrl + 'rest/' + url,
+        data: data,
+        success: cb,
+        dataType: 'json'
+    });
+}
+
+function ajaxQuery(url,cb,data){
+    data = data || {};
+    $.ajax({
+        type: "GET",
+        url: globalUrl + 'rest/' + url,
+        data: data,
+        success: cb,
+        dataType: 'json'
+    });
+}
+
+$(document).ready(function () {
+    $('[data-load-view]').on('click', function (e) {
+        let view = $(this).data('view');
+        let size = $(this).data('size') || 'small';
+        let options = { view: view, size: size };
+
+        ipcRenderer.send('load:view', options);
+    });
+});</script><script>$(document).ready(function(){
+
+    function requestDashboard(){
+        ajaxQuery('dashboard',function(res){
+            if(res.status == 200){
+                $('[data-dashboard=tags]').html(res.data.tags);
+                $('[data-dashboard=posts]').html(res.data.posts);
+                $('[data-dashboard=slider]').html(res.data.slider);
+                $('[data-dashboard=footer]').html(res.data.footer);
+            }
+            setTimeout(requestDashboard,5000);
+        });
+    }
+
+    requestDashboard();
+
+    $('[data-refresh-instagram]').click(function(){
+        let self = $(this);
+        self.find('.badge').removeClass('d-none');
+        $.ajax({
+            type: "GET",
+            url: globalUrl + 'insta_crawler/downloadPics',
+            success: function(res){
+                if(res.status == 200){
+                    self.find('.badge').addClass('d-none');
+                }
+            },
+            dataType: 'json'
+        });
+    });
+});</script></html>

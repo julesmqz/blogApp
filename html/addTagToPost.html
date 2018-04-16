@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="ie=edge"/><title>Jule de Hule Blog Admin</title><link href="http://jh.localhost/assets/css/bootstrap.min.css" rel="stylesheet"/><script defer="defer" src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script><link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/><link href="css/app.min.css" rel="stylesheet"/></head><style>#editor{
+    width:100%;
+    height: 100vh;
+}</style><body><nav class="navbar navbar-light bg-light"><img class="jh-brand d-inline-block align-top" src="http://assets.juledehule.com.mx/img/logo_vertical.png?66ad79ecb7128f0679bf61fdc19f2459" alt=""/></nav><div class="container-fluid"><div class="row"><div class="col-12"><div class="list-group jh-tag-list" data-tag-list="data-tag-list"></div></div></div></div><script>window.$ = window.jQuery = require('jquery');</script><script src="http://jh.localhost/assets/js/popper.min.js"></script><script src="http://jh.localhost/assets/js/bootstrap.min.js"></script><script> const electron = require('electron');
+const { ipcRenderer } = electron;
+const globalUrl = 'http://jh.localhost/';
+
+function ajaxSave(url, data, cb) {
+    $.ajax({
+        type: "POST",
+        url: globalUrl + 'rest/' + url,
+        data: data,
+        success: cb,
+        dataType: 'json'
+    });
+}
+
+function ajaxQuery(url,cb,data){
+    data = data || {};
+    $.ajax({
+        type: "GET",
+        url: globalUrl + 'rest/' + url,
+        data: data,
+        success: cb,
+        dataType: 'json'
+    });
+}
+
+$(document).ready(function () {
+    $('[data-load-view]').on('click', function (e) {
+        let view = $(this).data('view');
+        let size = $(this).data('size') || 'small';
+        let options = { view: view, size: size };
+
+        ipcRenderer.send('load:view', options);
+    });
+});</script><script>var tagTemplate = '<button class="list-group-item list-group-item-action" data-add-tag data-id="{{id}}" data-title="{{title}}"><span class="float-left">{{title}}</span><span class="float-right">agregar</span></button>'
+$(document).ready(function(){
+    // Load the list
+    ajaxQuery('getTags',function(res){
+        if( res.status == 200 ){
+            res.data.forEach(function( tag ){
+                let tagHtml = tagTemplate.replace(/{{id}}/g,tag.id).replace(/{{title}}/g,tag.name);
+                $('[data-tag-list]').append(tagHtml);
+            });
+        }
+    });
+
+    // send tag to add post
+    $('body').on('click','[data-add-tag]',function(){
+        let options = {id: $(this).data('id'),title: $(this).data('title')};
+        ipcRenderer.send('add:tag', options);
+    });
+    
+});</script></body></html>

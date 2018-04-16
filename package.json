@@ -1,0 +1,15 @@
+{
+  "name": "blogapp",
+  "version": "1.0.0",
+  "description": "app for my blog",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Julio Marquez",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^1.8.4",
+    "jquery": "^3.3.1"
+  }
+}
